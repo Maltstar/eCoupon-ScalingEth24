@@ -20,6 +20,16 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
   mapping(uint vendorID => uint[] couponCollectionsByVendor) vendorCouponCollections;
   uint vendorIDCounter = 0;
 
+  struct CouponCollectionData {
+    uint vendorID;
+    uint256 discount;
+    uint256 price;
+    uint maxCouponAmount;
+  }
+
+  mapping(uint couponCollectionID => CouponCollectionData) couponCollections;
+  uint couponCollectionIDCounter;
+
   function registerVendor(string memory name, string memory storeLink) external {
     vendors[vendorIDCounter] = Vendor(msg.sender, name, storeLink);
     vendorIDCounter++;
@@ -29,5 +39,21 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     require(vendors[vendorID].vendorAddress == msg.sender, "Only vendor can update its data");
     vendors[vendorID].name = name;
     vendors[vendorID].storeLink = storeLink;
+  }
+
+  function listCouponCollection(uint vendorID, uint256 discount, uint256 price, uint maxCouponAmount) external {
+    require(vendors[vendorID].vendorAddress == msg.sender, "Only vendor can list coupon collection");
+
+    couponCollections[couponCollectionIDCounter] = CouponCollectionData(vendorID, discount, price, maxCouponAmount);
+    vendorCouponCollections[vendorID].push(couponCollectionIDCounter);
+    couponCollectionIDCounter++;
+  }
+
+  function updateCouponCollection(uint256 couponCollectionID, uint256 discount, uint256 price, uint maxCouponAmount) external {
+    require(vendors[couponCollections[couponCollectionID].vendorID].vendorAddress == msg.sender, "Only vendor can update its coupon collection");
+
+    couponCollections[couponCollectionID].discount = discount;
+    couponCollections[couponCollectionID].price = price;
+    couponCollections[couponCollectionID].maxCouponAmount = maxCouponAmount;
   }
 }
