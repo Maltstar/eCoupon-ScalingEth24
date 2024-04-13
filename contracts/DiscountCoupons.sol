@@ -16,9 +16,9 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     string storeLink;
   }
   
-  mapping(uint vendorID => Vendor) vendors;
-  mapping(uint vendorID => uint[] couponCollectionsByVendor) vendorCouponCollections;
-  uint vendorIDCounter = 0;
+  mapping(uint vendorID => Vendor) public vendors;
+  mapping(uint vendorID => uint[] couponCollectionsByVendor) public vendorCouponCollections;
+  uint public vendorIDCounter = 0;
 
   struct CouponCollectionData {
     uint vendorID;
@@ -27,8 +27,8 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     uint maxCouponAmount;
   }
 
-  mapping(uint couponCollectionID => CouponCollectionData) couponCollections;
-  uint couponCollectionIDCounter;
+  mapping(uint couponCollectionID => CouponCollectionData) public couponCollections;
+  uint public couponCollectionIDCounter;
 
   function registerVendor(string memory name, string memory storeLink) external {
     vendors[vendorIDCounter] = Vendor(msg.sender, name, storeLink);
