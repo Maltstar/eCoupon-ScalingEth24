@@ -36,7 +36,7 @@ contract DiscountCoupons is Ownable, ERC1155Supply, ERC1155Burnable {
     vendors[vendorID].storeLink = storeLink;
   }
 
-  function listCouponCollection(string memory name, string memory storeLink, uint vendorID, uint256 discount, uint256 price, uint maxCouponAmount) external {
+  function listCouponCollection(string memory name, string memory storeLink, uint256 discount, uint256 price, uint maxCouponAmount) external {
     vendors[vendorIDCounter] = Vendor(msg.sender, name, storeLink);
 
     couponCollections[couponCollectionIDCounter] = CouponCollectionData(vendorIDCounter, discount, price, maxCouponAmount);
@@ -52,5 +52,9 @@ contract DiscountCoupons is Ownable, ERC1155Supply, ERC1155Burnable {
     couponCollections[couponCollectionID].discount = discount;
     couponCollections[couponCollectionID].price = price;
     couponCollections[couponCollectionID].maxCouponAmount = maxCouponAmount;
+  }
+
+  function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) virtual {
+    super._update(from, to, ids, values);
   }
 }
