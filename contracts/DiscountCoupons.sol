@@ -22,9 +22,10 @@ contract DiscountCoupons is Ownable, ERC1155Supply, ERC1155Burnable {
 
   struct CouponCollectionData {
     uint vendorID;
+    string name;
     uint256 discount;
-    uint256 price;
     uint maxCouponAmount;
+    uint expirationDate;
   }
 
   mapping(uint couponCollectionID => CouponCollectionData) public couponCollections;
@@ -36,22 +37,23 @@ contract DiscountCoupons is Ownable, ERC1155Supply, ERC1155Burnable {
     vendors[vendorID].storeLink = storeLink;
   }
 
-  function listCouponCollection(string memory name, string memory storeLink, uint256 discount, uint256 price, uint maxCouponAmount) external {
-    vendors[vendorIDCounter] = Vendor(msg.sender, name, storeLink);
+  function listCouponCollection(string memory vendorName, string memory storeLink, string memory couponName, uint256 discount, uint maxCouponAmount, uint expirationDate) external {
+    vendors[vendorIDCounter] = Vendor(msg.sender, vendorName, storeLink);
 
-    couponCollections[couponCollectionIDCounter] = CouponCollectionData(vendorIDCounter, discount, price, maxCouponAmount);
+    couponCollections[couponCollectionIDCounter] = CouponCollectionData(vendorIDCounter, couponName, discount, maxCouponAmount, expirationDate);
     vendorCouponCollections[vendorIDCounter].push(couponCollectionIDCounter);
     
     vendorIDCounter++;
     couponCollectionIDCounter++;
   }
 
-  function updateCouponCollection(uint256 couponCollectionID, uint256 discount, uint256 price, uint maxCouponAmount) external {
+  function updateCouponCollection(uint256 couponCollectionID, string memory name, uint256 discount, uint maxCouponAmount, uint expirationDate) external {
     require(vendors[couponCollections[couponCollectionID].vendorID].vendorAddress == msg.sender, "Only vendor can update its coupon collection");
 
+    couponCollections[couponCollectionID].name = name;
     couponCollections[couponCollectionID].discount = discount;
-    couponCollections[couponCollectionID].price = price;
     couponCollections[couponCollectionID].maxCouponAmount = maxCouponAmount;
+    couponCollections[couponCollectionID].expirationDate = expirationDate;
   }
 
   function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) virtual {
