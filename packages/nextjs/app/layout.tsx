@@ -1,9 +1,9 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import { Metadata } from "next";
+import CouponsProvider from "~~/components/CouponsProvider";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
-import CouponsProvider from "~~/components/CouponsProvider";
 import { platformName } from "~~/utils/platfom/name";
 
 const baseUrl = process.env.VERCEL_URL
@@ -49,22 +49,14 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
-
-  
-
   return (
     <html suppressHydrationWarning>
       <body>
-      
-
         <ThemeProvider enableSystem>
-        <CouponsProvider>
-          <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
-        </CouponsProvider>
-          
+          <CouponsProvider>
+            <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
+          </CouponsProvider>
         </ThemeProvider>
       </body>
     </html>
