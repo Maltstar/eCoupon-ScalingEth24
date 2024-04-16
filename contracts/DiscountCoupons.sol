@@ -59,4 +59,8 @@ contract DiscountCoupons is Ownable, ERC1155Supply, ERC1155Burnable {
   function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) virtual {
     super._update(from, to, ids, values);
   }
+
+  function mintCoupon(uint256 couponCollectionID) external {
+    _mint(msg.sender, couponCollectionID, 1, "");
+  }
 }
