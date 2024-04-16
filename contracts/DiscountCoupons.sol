@@ -7,20 +7,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-// 1. Vendor can list new coupon.
-    // Max. Coupon Amount
-        // Mapping
-    // Name
-    // Discount
-    // Price (0 default in MVP)
-    // 
-// 2. Vendor can update coupon parameters.
-// 3. User can mint coupon.
-// 4. mapping(id => CouponData)
-// 5. List of vendors. VendorID, Name, Store Link. Mappinmg (addresss Vendor => struct)
-// 6. Vendor will get vendor ID on first coupon listing.
-// 7. User use coupon to get discount.
-// 8. Mapping (vendorID => list of vendor coupon collections). To simplify life of frontend.
+// 9. Register ERC20 token at 0 ID as fungible (ERC20) token that we will use as payment token.
+// 10. Use coupon -> send to 0 address.
 
 // Second contract - Payment processor + Coupon Execution
 // 1. Accept ERC20.
@@ -30,6 +18,7 @@ import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
     // Update coupon metadata.
     // set Used = true.
     // set invoiceURL - ipfs CID json with purchase
+// 7. User use coupon to get discount.
 
 contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     constructor() ERC1155("") Ownable(msg.sender) {}
@@ -55,16 +44,17 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         uint vendorID;
         string name;
         uint256 discount;
-        uint maxCouponAmount;
+        uint maxSupply;
         uint expirationDate;
     }
 
     mapping(uint couponCollectionID => CouponCollectionData) public couponCollections;
     uint public couponCollectionIDCounter;
 
-    // Coupon events
-    // TODO
-    
+    event CouponListed(address indexed couponListOwner, uint indexed vendorID, uint indexed couponCollectionID);
+    event CouponUpdated(uint indexed couponCollectionID);
+    event CouponMinted(address indexed couponOwner, uint indexed couponCollectionID, uint amount);
+        
     // Referral sector
     struct Referral {
         address referralAddress;
@@ -103,11 +93,17 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
 
     // internal function to check if the address registered as vendor
     function isVendor(address _address) internal view returns (bool) {
-        return _addressToVendorID[_address] > 0 ? true : false ;
+        return _addressToVendorID[_address] > 0;
     }
 
-    // discount - in milipercent (1 = 0.01%) x * 10**2
-    function listCouponCollection(string memory vendorName, string memory storeLink, string memory couponName, uint256 discount, uint maxCouponAmount, uint expirationDate) external {
+    function listCouponCollection(
+        string memory vendorName, 
+        string memory storeLink, 
+        string memory couponName, 
+        uint256 discount, 
+        uint maxCouponSupply, 
+        uint expirationDate
+    ) public returns(uint) {
         // get vendor ID
         uint vendorID = _addressToVendorID[msg.sender];
         // check if vendor already registered
@@ -115,8 +111,14 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
             vendorID = registerNewVendor(vendorName, storeLink);
         }
         
-        couponCollections[couponCollectionIDCounter] = CouponCollectionData(vendorID, couponName, discount, maxCouponAmount, expirationDate);
-        vendorCouponCollections[vendorID].push(couponCollectionIDCounter);
+        // get & increment couponID
+        uint couponID = ++couponCollectionIDCounter;
+        couponCollections[couponID] = CouponCollectionData(vendorID, couponName, discount, maxCouponSupply, expirationDate);
+        vendorCouponCollections[vendorID].push(couponID);
+
+        // emit event
+        emit CouponListed(msg.sender, vendorID, couponID);
+        return couponID;
     }
 
     function updateCouponCollection(uint256 couponCollectionID, string memory name, uint256 discount, uint maxCouponAmount, uint expirationDate) external {
@@ -124,15 +126,40 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
 
         couponCollections[couponCollectionID].name = name;
         couponCollections[couponCollectionID].discount = discount;
-        couponCollections[couponCollectionID].maxCouponAmount = maxCouponAmount;
+        couponCollections[couponCollectionID].maxSupply = maxCouponAmount;
         couponCollections[couponCollectionID].expirationDate = expirationDate;
+
+        // emit event
+        emit CouponUpdated(couponCollectionID);
     }
 
-    function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) virtual {
+    function mintCoupon(uint256 couponCollectionID, uint amount) external {
+        // check that max coup amount is not reached.
+        uint availableSupply = availableCouponSupply(couponCollectionID);
+        require(availableSupply >= amount, "Max coupon amount reached");
+
+        _mint(msg.sender, couponCollectionID, amount, "");
+        
+        // emit event
+        emit CouponMinted(msg.sender, couponCollectionID, amount);
+    }
+
+    // function to get available coupons amount to mint
+    function availableCouponSupply(uint couponCollectionID) public view returns(uint) {
+        uint maxSupply = couponCollections[couponCollectionID].maxSupply;
+        uint totalSupply = totalSupply(couponCollectionID);
+        return maxSupply - totalSupply;
+    }
+
+    // Tested above
+
+    // TODO
+    // function to usecoupon
+    // add it to interface
+    // burn the coupon & don't update total supply
+    
+    // The following functions are overrides required by Solidity.
+    function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) {
         super._update(from, to, ids, values);
-    }
-
-    function mintCoupon(uint256 couponCollectionID) external {
-        _mint(msg.sender, couponCollectionID, 1, "");
     }
 }
