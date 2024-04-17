@@ -3,13 +3,18 @@
 pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
-    constructor() ERC1155("") Ownable(msg.sender) {}
+contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
+// contract ERC1155eCoupon is ERC1155, AccessControl, ERC1155Burnable, ERC1155Supply {
+    bytes32 public constant DEFAULT_ADMIN_ROLE = keccak256("DEFAULT_ADMIN_ROLE");
+    
+    constructor() ERC1155("") {
+        // _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
 
     // Vendor sector
     struct Vendor {
@@ -154,9 +159,9 @@ contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         emit CouponUsed(couponCollectionIds[0], couponOwner, values[0]);
     }
 
-    function setURI(string memory newuri) public onlyOwner {
-        _setURI(newuri);
-    }
+    // function setURI(string memory newuri) public hasRole(DEFAULT_ADMIN_ROLE) {
+    //     _setURI(newuri);
+    // }
 
     // The following functions are overrides required by Solidity.
     function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) {
