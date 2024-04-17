@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import "../contracts/YourContract.sol";
+import "../contracts/ERC20mockup.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -15,24 +15,24 @@ contract DeployScript is ScaffoldETHDeploy {
             );
         }
         vm.startBroadcast(deployerPrivateKey);
-        YourContract yourContract =
-            new YourContract(vm.addr(deployerPrivateKey));
+        ERC20mockup erc20contract =
+            new ERC20mockup();
         console.logString(
             string.concat(
-                "YourContract deployed at: ", vm.toString(address(yourContract))
+                "ERC20mockup deployed at: ", vm.toString(address(erc20contract))
             )
         );
         vm.stopBroadcast();
 
-        vm.startBroadcast(deployerPrivateKey);
-        YourContract yourContract =
-            new YourContract(vm.addr(deployerPrivateKey));
-        console.logString(
-            string.concat(
-                "YourContract deployed at: ", vm.toString(address(yourContract))
-            )
-        );
-        vm.stopBroadcast();
+        // vm.startBroadcast(deployerPrivateKey);
+        // ERC20mockup erc20contract =
+        //     new ERC20mockup(vm.addr(deployerPrivateKey));
+        // console.logString(
+        //     string.concat(
+        //         "ERC20mockup deployed at: ", vm.toString(address(erc20contract))
+        //     )
+        // );
+        // vm.stopBroadcast();
 
         /**
          * This function generates the file containing the contracts Abi definitions.
