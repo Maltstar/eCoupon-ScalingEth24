@@ -24,6 +24,16 @@ contract DeployScript is ScaffoldETHDeploy {
         );
         vm.stopBroadcast();
 
+        vm.startBroadcast(deployerPrivateKey);
+        YourContract yourContract =
+            new YourContract(vm.addr(deployerPrivateKey));
+        console.logString(
+            string.concat(
+                "YourContract deployed at: ", vm.toString(address(yourContract))
+            )
+        );
+        vm.stopBroadcast();
+
         /**
          * This function generates the file containing the contracts Abi definitions.
          * These definitions are used to derive the types needed in the custom scaffold-eth hooks, for example.
