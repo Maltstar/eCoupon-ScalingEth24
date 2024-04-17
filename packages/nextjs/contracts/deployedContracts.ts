@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ERC20mockup: {
-      address: "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+      address: "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
       abi: [
         {
           type: "constructor",
@@ -551,7 +551,1167 @@ const deployedContracts = {
           ],
         },
       ],
-      inheritedFunctions: {},
+      inheritedFunctions: {
+        allowance: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        approve: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        balanceOf: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        decimals: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        name: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        symbol: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        totalSupply: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        transfer: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        transferFrom: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        DOMAIN_SEPARATOR: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        eip712Domain: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        nonces: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        permit: "lib/openzeppelin-contracts/contracts/token/ERC20/extensions/ERC20Permit.sol",
+      },
+    },
+    ERC1155eCoupon: {
+      address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "_addressToVendorID",
+          inputs: [
+            {
+              name: "_address",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "_referrals",
+          inputs: [
+            {
+              name: "referralID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "referralAddress",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "availableCouponSupply",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "balanceOf",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "balanceOfBatch",
+          inputs: [
+            {
+              name: "accounts",
+              type: "address[]",
+              internalType: "address[]",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "burn",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "value",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "burnBatch",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "couponCollectionIDCounter",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "couponCollections",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "discount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "maxSupply",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "expirationDate",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "invoiceID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "exists",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "isApprovedForAll",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "listCouponCollection",
+          inputs: [
+            {
+              name: "vendorName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "storeLink",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "couponName",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "discount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "maxCouponSupply",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "expirationDate",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "mintCoupon",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "owner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "referralBalance",
+          inputs: [
+            {
+              name: "referralID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "referralBalance",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "referralIDCounter",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "registerNewVendor",
+          inputs: [
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "storeLink",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "renounceOwnership",
+          inputs: [],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "safeBatchTransferFrom",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "safeTransferFrom",
+          inputs: [
+            {
+              name: "from",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "value",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "data",
+              type: "bytes",
+              internalType: "bytes",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "setApprovalForAll",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "approved",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "setURI",
+          inputs: [
+            {
+              name: "newuri",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "supportsInterface",
+          inputs: [
+            {
+              name: "interfaceId",
+              type: "bytes4",
+              internalType: "bytes4",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "bool",
+              internalType: "bool",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "totalSupply",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "totalSupply",
+          inputs: [
+            {
+              name: "id",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "transferOwnership",
+          inputs: [
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "updateCouponCollection",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "discount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "maxCouponAmount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "expirationDate",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "updateVendor",
+          inputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "storeLink",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "uri",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "useCoupon",
+          inputs: [
+            {
+              name: "couponOwner",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "couponCollectionIds",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "vendorBalance",
+          inputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "vendorBalance",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "vendorCouponCollections",
+          inputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "couponCollectionsByVendor",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "vendorIDCounter",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "vendors",
+          inputs: [
+            {
+              name: "vendorID",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "vendorAddress",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "name",
+              type: "string",
+              internalType: "string",
+            },
+            {
+              name: "storeLink",
+              type: "string",
+              internalType: "string",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "event",
+          name: "ApprovalForAll",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "approved",
+              type: "bool",
+              indexed: false,
+              internalType: "bool",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "CouponListed",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "couponListOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "vendorID",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "CouponMinted",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "couponOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "CouponUpdated",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "CouponUsed",
+          inputs: [
+            {
+              name: "couponCollectionID",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "couponOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "OwnershipTransferred",
+          inputs: [
+            {
+              name: "previousOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "newOwner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "TransferBatch",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "from",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "ids",
+              type: "uint256[]",
+              indexed: false,
+              internalType: "uint256[]",
+            },
+            {
+              name: "values",
+              type: "uint256[]",
+              indexed: false,
+              internalType: "uint256[]",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "TransferSingle",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "from",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "to",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "value",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "URI",
+          inputs: [
+            {
+              name: "value",
+              type: "string",
+              indexed: false,
+              internalType: "string",
+            },
+            {
+              name: "id",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "VendorRegistered",
+          inputs: [
+            {
+              name: "vendorAddress",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "vendorID",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "VendorUpdated",
+          inputs: [
+            {
+              name: "indexedvendorID",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "error",
+          name: "ERC1155InsufficientBalance",
+          inputs: [
+            {
+              name: "sender",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "balance",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "needed",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "tokenId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidApprover",
+          inputs: [
+            {
+              name: "approver",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidArrayLength",
+          inputs: [
+            {
+              name: "idsLength",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "valuesLength",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidOperator",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidReceiver",
+          inputs: [
+            {
+              name: "receiver",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155InvalidSender",
+          inputs: [
+            {
+              name: "sender",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "ERC1155MissingApprovalForAll",
+          inputs: [
+            {
+              name: "operator",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "OwnableInvalidOwner",
+          inputs: [
+            {
+              name: "owner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "OwnableUnauthorizedAccount",
+          inputs: [
+            {
+              name: "account",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+      ],
+      inheritedFunctions: {
+        balanceOf: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        balanceOfBatch: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        isApprovedForAll: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        safeBatchTransferFrom: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        safeTransferFrom: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        setApprovalForAll: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        supportsInterface: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        uri: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        owner: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        renounceOwnership: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        transferOwnership: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
+        burn: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
+        burnBatch: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
+        exists: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+        totalSupply: "lib/openzeppelin-contracts/contracts/token/ERC1155/extensions/ERC1155Supply.sol",
+      },
     },
   },
 } as const;

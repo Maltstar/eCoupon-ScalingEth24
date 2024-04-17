@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 import "../contracts/ERC20mockup.sol";
+import "../contracts/ERC1155eCoupon.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -15,13 +16,22 @@ contract DeployScript is ScaffoldETHDeploy {
             );
         }
         vm.startBroadcast(deployerPrivateKey);
-        ERC20mockup erc20contract =
+        ERC20mockup erc20Contract =
             new ERC20mockup();
         console.logString(
             string.concat(
-                "ERC20mockup deployed at: ", vm.toString(address(erc20contract))
+                "ERC20mockup deployed at: ", vm.toString(address(erc20Contract))
             )
         );
+        
+        ERC1155eCoupon eCouponContract =
+            new ERC1155eCoupon();
+        console.logString(
+            string.concat(
+                "ERC1155eCoupon deployed at: ", vm.toString(address(eCouponContract))
+            )
+        );
+        
         vm.stopBroadcast();
 
         // vm.startBroadcast(deployerPrivateKey);
