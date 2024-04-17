@@ -4,21 +4,9 @@ pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
-
-// 9. Register ERC20 token at 0 ID as fungible (ERC20) token that we will use as payment token.
-// 10. Use coupon -> send to 0 address.
-
-// Second contract - Payment processor + Coupon Execution
-// 1. Accept ERC20.
-// 2. Accept coupon.
-// 3. Verify coupon.
-// 4. Change coupon status. 
-    // Update coupon metadata.
-    // set Used = true.
-    // set invoiceURL - ipfs CID json with purchase
-// 7. User use coupon to get discount.
 
 contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     constructor() ERC1155("") Ownable(msg.sender) {}
@@ -46,14 +34,16 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         uint256 discount;
         uint maxSupply;
         uint expirationDate;
+        uint invoiceID;
     }
 
     mapping(uint couponCollectionID => CouponCollectionData) public couponCollections;
     uint public couponCollectionIDCounter;
 
-    event CouponListed(address indexed couponListOwner, uint indexed vendorID, uint indexed couponCollectionID);
+    event CouponListed(uint indexed couponCollectionID, address indexed couponListOwner, uint indexed vendorID);
     event CouponUpdated(uint indexed couponCollectionID);
-    event CouponMinted(address indexed couponOwner, uint indexed couponCollectionID, uint amount);
+    event CouponMinted(uint indexed couponCollectionID, address indexed couponOwner, uint amount);
+    event CouponUsed(uint indexed couponCollectionID, address indexed couponOwner, uint amount);
         
     // Referral sector
     struct Referral {
@@ -113,11 +103,11 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         
         // get & increment couponID
         uint couponID = ++couponCollectionIDCounter;
-        couponCollections[couponID] = CouponCollectionData(vendorID, couponName, discount, maxCouponSupply, expirationDate);
+        couponCollections[couponID] = CouponCollectionData(vendorID, couponName, discount, maxCouponSupply, expirationDate, 0);
         vendorCouponCollections[vendorID].push(couponID);
 
         // emit event
-        emit CouponListed(msg.sender, vendorID, couponID);
+        emit CouponListed(couponID, msg.sender, vendorID);
         return couponID;
     }
 
@@ -141,7 +131,7 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         _mint(msg.sender, couponCollectionID, amount, "");
         
         // emit event
-        emit CouponMinted(msg.sender, couponCollectionID, amount);
+        emit CouponMinted(couponCollectionID, msg.sender, amount);
     }
 
     // function to get available coupons amount to mint
@@ -151,13 +141,23 @@ contract DiscountCoupons is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         return maxSupply - totalSupply;
     }
 
-    // Tested above
-
-    // TODO
     // function to usecoupon
-    // add it to interface
-    // burn the coupon & don't update total supply
-    
+    function useCoupon(address couponOwner, uint256[] memory couponCollectionIds, uint256[] memory values) external {
+        // require coupon owner have the coupon
+        uint currentBalance = balanceOf(couponOwner, couponCollectionIds[0]);
+        require(currentBalance >= values[0], "Not enough coupons on balance");
+        // burn the coupon & don't update total supply
+        // send coupon to this contract
+        _update(couponOwner, address(this), couponCollectionIds, values);
+
+        // event
+        emit CouponUsed(couponCollectionIds[0], couponOwner, values[0]);
+    }
+
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
+
     // The following functions are overrides required by Solidity.
     function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) {
         super._update(from, to, ids, values);
