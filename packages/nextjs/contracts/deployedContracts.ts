@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ERC20mockup: {
-      address: "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+      address: "0xa51c1fc2f0d1a1b8494ed1fe312d7c3a78ed91c0",
       abi: [
         {
           type: "constructor",
@@ -568,7 +568,7 @@ const deployedContracts = {
       },
     },
     ERC1155eCoupon: {
-      address: "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+      address: "0x0dcd1bf9a1b36ce34237eeafef220932846bcd82",
       abi: [
         {
           type: "constructor",
@@ -1776,7 +1776,7 @@ const deployedContracts = {
       },
     },
     PaymentProcessor: {
-      address: "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+      address: "0x9a676e781a523b5d0c0e43731313a708cb607508",
       abi: [
         {
           type: "constructor",
@@ -2170,11 +2170,7 @@ const deployedContracts = {
           ],
         },
       ],
-      inheritedFunctions: {
-        owner: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
-        renounceOwnership: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
-        transferOwnership: "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
-      },
+      inheritedFunctions: {},
     },
   },
 } as const;

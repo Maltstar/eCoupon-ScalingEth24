@@ -5,7 +5,6 @@ pragma solidity ^0.8.25;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IERC1155eCoupon.sol";
-// import "./SafeMath.sol";
 
 contract PaymentProcessor is Ownable {
     IERC20 public paymentToken_;
@@ -59,8 +58,8 @@ contract PaymentProcessor is Ownable {
     function processPaymentWithCoupon(uint _amount, uint _vendorID, uint _couponID, string memory _invoiceCID) public returns(uint) {
         
         // check input values
-        require(_couponID == 0, "Coupon ID must not be empty");
-        require(_vendorID == 0, "Vendor ID must not be empty");
+        require(_couponID != 0, "Coupon ID must not be empty");
+        require(_vendorID != 0, "Vendor ID must not be empty");
         require(bytes(_invoiceCID).length > 0, "Invoice CID must not be empty");
         
         // check that caller own coupon
@@ -70,6 +69,8 @@ contract PaymentProcessor is Ownable {
         uint discountValue = getDiscountValueWithCoupon(_amount, _couponID);
         uint amountToPay = _amount - discountValue;
         
+        // Check payment tokes (erc20) allowance
+        require(paymentToken_.allowance(msg.sender, address(this)) >= amountToPay, "Not enough token allowance to spend payment tokens");
         // Transfer payment tokens (erc20) from caller to contract
         paymentToken_.transferFrom(msg.sender, address(this), amountToPay);
 
@@ -93,7 +94,7 @@ contract PaymentProcessor is Ownable {
         eCoupon_.useCoupon(msg.sender, couponIDs, values, discountValue);
 
         // save payment data
-        uint paymentID = nextPaymentId_++;
+        uint paymentID = ++nextPaymentId_;
         payments_[paymentID] = Payment(_vendorID, _couponID, _amount, amountToPay, discountValue, _invoiceCID);
 
         // emit event

@@ -46,16 +46,6 @@ contract DeployScript is ScaffoldETHDeploy {
         
         vm.stopBroadcast();
 
-        // vm.startBroadcast(deployerPrivateKey);
-        // ERC20mockup erc20contract =
-        //     new ERC20mockup(vm.addr(deployerPrivateKey));
-        // console.logString(
-        //     string.concat(
-        //         "ERC20mockup deployed at: ", vm.toString(address(erc20contract))
-        //     )
-        // );
-        // vm.stopBroadcast();
-
         /**
          * This function generates the file containing the contracts Abi definitions.
          * These definitions are used to derive the types needed in the custom scaffold-eth hooks, for example.
