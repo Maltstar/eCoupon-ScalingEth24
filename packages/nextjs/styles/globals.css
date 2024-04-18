@@ -56,6 +56,7 @@ form{
   _margin-left: 42%;
 }
 
+
 #btn_close
 {
   margin-left:42%;
@@ -110,6 +111,22 @@ input{
   
 }
 
+.coupon_preview
+{
+  margin: auto;
+}
+
+.image_coupon
+{
+  margin:auto;
+  margin-bottom: 20%;
+  
+}
+
+#preview_image
+{
+  margin-left: 15%;
+}
 .outputform
 {
   

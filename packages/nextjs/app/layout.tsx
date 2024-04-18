@@ -4,7 +4,7 @@ import CouponsProvider from "~~/components/CouponsProvider";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
-import { platformName } from "~~/utils/platfom/name";
+import { platformName } from "~~/utils/platfom/general";
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
