@@ -6,6 +6,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IERC1155eCoupon.sol";
 
+// TODO
+// role to use coupon
+// referrals
+// deploy script
+// 
+
 contract PaymentProcessor is Ownable {
     IERC20 public paymentToken_;
     IERC1155eCoupon public eCoupon_;
@@ -94,7 +100,7 @@ contract PaymentProcessor is Ownable {
         eCoupon_.useCoupon(msg.sender, couponIDs, values, discountValue);
 
         // save payment data
-        uint paymentID = ++nextPaymentId_;
+        uint paymentID = nextPaymentId_++;
         payments_[paymentID] = Payment(_vendorID, _couponID, _amount, amountToPay, discountValue, _invoiceCID);
 
         // emit event
@@ -120,17 +126,6 @@ contract PaymentProcessor is Ownable {
     }
 }
 
-// Second contract - Payment processor + Coupon Execution
-// 1. Accept ERC20.
-// 2. Accept coupon.
-// 3. Verify coupon.
-// 4. Change coupon status. 
-    // Update coupon metadata.
-    // set Used = true.
-    // set invoiceURL - ipfs CID json with purchase
-// 7. User use coupon to get discount.
-
-
 // Referals
 // 1. Stuct - address, id, name -mrbeast
 // 2. Balance
@@ -145,31 +140,4 @@ contract PaymentProcessor is Ownable {
 // + Vendor create unique coupon collection for MrBeast.
 // + 
 // 5. Coupon price is 0 for MVP.
-
-// contract PaymentProcessor {
-
-//   function useCoupon(uint256 couponCollectionID, uint couponID) external {
-
-//   }
-
-//   function acceptPayment(address token, uint256 amount, bytes memory couponData) external{
-
-//   }
-
-//   function setInvoiceURL(uint256 couponCollectionID, uint couponID, string memory invoiceURL) external{
-
-//   }
-
-//   // function that will prepare coupon array & will call use coupon
-//     function applyDiscountCoupon(uint couponCollectionID, address couponOwner, uint amount) internal {
-//         // Create an array to store the coupon IDs
-//         uint256[] memory couponIDs = new uint256[](1);
-//         couponIDs[0] = couponCollectionID;
-
-//         // Create an array to store the coupon amount
-//         uint256[] memory values = new uint256[](1);
-//         values[0] = amount;
-
-//         DiscountCoupons.useCoupon(couponOwner, couponIDs, values);
-//     }
-// }
+// 6. ??? Additional function to set invoice CID.

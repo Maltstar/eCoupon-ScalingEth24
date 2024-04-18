@@ -147,7 +147,7 @@ contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     }
 
     // function to usecoupon
-    function useCoupon(address couponOwner, uint256[] memory couponCollectionIds, uint256[] memory values, uint _discountValue) external {
+    function useCoupon(address couponOwner, uint256[] memory couponCollectionIds, uint256[] memory values, uint _discountValue) external onlyOwner {
         // require coupon owner have the coupon
         uint currentBalance = balanceOf(couponOwner, couponCollectionIds[0]);
         require(currentBalance >= values[0], "Not enough coupons on balance");

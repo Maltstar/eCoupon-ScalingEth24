@@ -43,6 +43,8 @@ contract DeployScript is ScaffoldETHDeploy {
                 "PaymentProcessor deployed at: ", vm.toString(address(paymentProcessor))
             )
         );
+
+        paymentProcessor.transferOwnership(address(paymentProcessor));
         
         vm.stopBroadcast();
 
