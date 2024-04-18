@@ -3,6 +3,7 @@ pragma solidity ^0.8.19;
 
 import "../contracts/ERC20mockup.sol";
 import "../contracts/ERC1155eCoupon.sol";
+import "../contracts/PaymentProcessor.sol";
 import "./DeployHelpers.s.sol";
 
 contract DeployScript is ScaffoldETHDeploy {
@@ -29,6 +30,17 @@ contract DeployScript is ScaffoldETHDeploy {
         console.logString(
             string.concat(
                 "ERC1155eCoupon deployed at: ", vm.toString(address(eCouponContract))
+            )
+        );
+        
+        PaymentProcessor paymentProcessor =
+            new PaymentProcessor(
+                address(eCouponContract),
+                address(erc20Contract)
+            );
+        console.logString(
+            string.concat(
+                "PaymentProcessor deployed at: ", vm.toString(address(paymentProcessor))
             )
         );
         

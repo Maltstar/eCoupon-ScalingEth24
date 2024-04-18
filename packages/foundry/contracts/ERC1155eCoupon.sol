@@ -3,18 +3,17 @@
 pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 
-contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
-// contract ERC1155eCoupon is ERC1155, AccessControl, ERC1155Burnable, ERC1155Supply {
-    bytes32 public constant DEFAULT_ADMIN_ROLE = keccak256("DEFAULT_ADMIN_ROLE");
-    
-    constructor() ERC1155("") {
-        // _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-    }
+// 10. Use coupon -> send to 0 address.
+// 11. set URI for token image.
+// 12. Implement receiver/holder.
+
+contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
+    constructor() ERC1155("") Ownable(msg.sender) {}
 
     // Vendor sector
     struct Vendor {
@@ -36,19 +35,20 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
     struct CouponCollectionData {
         uint vendorID;
         string name;
-        uint256 discount;
+        uint256 discountPercent;
         uint maxSupply;
         uint expirationDate;
         uint invoiceID;
     }
 
     mapping(uint couponCollectionID => CouponCollectionData) public couponCollections;
+    mapping(uint couponCollectionID => uint totalDiscounted) public totalDiscountedAmountByCouponCollection_;
     uint public couponCollectionIDCounter;
 
     event CouponListed(uint indexed couponCollectionID, address indexed couponListOwner, uint indexed vendorID);
     event CouponUpdated(uint indexed couponCollectionID);
     event CouponMinted(uint indexed couponCollectionID, address indexed couponOwner, uint amount);
-    event CouponUsed(uint indexed couponCollectionID, address indexed couponOwner, uint amount);
+    event CouponUsed(uint indexed couponCollectionID, address indexed couponOwner, uint discountValue);
         
     // Referral sector
     struct Referral {
@@ -95,7 +95,7 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
         string memory vendorName, 
         string memory storeLink, 
         string memory couponName, 
-        uint256 discount, 
+        uint256 discountPercent, 
         uint maxCouponSupply, 
         uint expirationDate
     ) public returns(uint) {
@@ -108,7 +108,7 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
         
         // get & increment couponID
         uint couponID = ++couponCollectionIDCounter;
-        couponCollections[couponID] = CouponCollectionData(vendorID, couponName, discount, maxCouponSupply, expirationDate, 0);
+        couponCollections[couponID] = CouponCollectionData(vendorID, couponName, discountPercent, maxCouponSupply, expirationDate, 0);
         vendorCouponCollections[vendorID].push(couponID);
 
         // emit event
@@ -116,11 +116,11 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
         return couponID;
     }
 
-    function updateCouponCollection(uint256 couponCollectionID, string memory name, uint256 discount, uint maxCouponAmount, uint expirationDate) external {
+    function updateCouponCollection(uint256 couponCollectionID, string memory name, uint256 discountPercent, uint maxCouponAmount, uint expirationDate) external {
         require(vendors[couponCollections[couponCollectionID].vendorID].vendorAddress == msg.sender, "Only vendor can update its coupon collection");
 
         couponCollections[couponCollectionID].name = name;
-        couponCollections[couponCollectionID].discount = discount;
+        couponCollections[couponCollectionID].discountPercent = discountPercent;
         couponCollections[couponCollectionID].maxSupply = maxCouponAmount;
         couponCollections[couponCollectionID].expirationDate = expirationDate;
 
@@ -147,7 +147,7 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
     }
 
     // function to usecoupon
-    function useCoupon(address couponOwner, uint256[] memory couponCollectionIds, uint256[] memory values) external {
+    function useCoupon(address couponOwner, uint256[] memory couponCollectionIds, uint256[] memory values, uint _discountValue) external {
         // require coupon owner have the coupon
         uint currentBalance = balanceOf(couponOwner, couponCollectionIds[0]);
         require(currentBalance >= values[0], "Not enough coupons on balance");
@@ -155,14 +155,25 @@ contract ERC1155eCoupon is ERC1155, ERC1155Burnable, ERC1155Supply {
         // send coupon to this contract
         _update(couponOwner, address(this), couponCollectionIds, values);
 
+        totalDiscountedAmountByCouponCollection_[couponCollectionIds[0]] += _discountValue;
+
         // event
-        emit CouponUsed(couponCollectionIds[0], couponOwner, values[0]);
+        emit CouponUsed(couponCollectionIds[0], couponOwner, _discountValue);
     }
 
-    // function setURI(string memory newuri) public hasRole(DEFAULT_ADMIN_ROLE) {
-    //     _setURI(newuri);
-    // }
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
 
+    function getDiscountPercent(uint256 _couponID) public view returns (uint256) {
+        return couponCollections[_couponID].discountPercent;
+    }
+
+    // funciton to get total discounted amount by coupon Id
+    function getTotalDiscountedAmount(uint _couponID) public view returns (uint) {
+        return totalDiscountedAmountByCouponCollection_[_couponID];
+    }
+    
     // The following functions are overrides required by Solidity.
     function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) {
         super._update(from, to, ids, values);
