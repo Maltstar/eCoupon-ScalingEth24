@@ -44,7 +44,7 @@ contract DeployScript is ScaffoldETHDeploy {
             )
         );
 
-        paymentProcessor.transferOwnership(address(paymentProcessor));
+        eCouponContract.transferOwnership(address(paymentProcessor));
         
         vm.stopBroadcast();
 

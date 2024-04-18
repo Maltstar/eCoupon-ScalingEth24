@@ -7,10 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IERC1155eCoupon.sol";
 
 // TODO
-// role to use coupon
 // referrals
-// deploy script
-// 
 
 contract PaymentProcessor is Ownable {
     IERC20 public paymentToken_;
@@ -42,6 +39,7 @@ contract PaymentProcessor is Ownable {
     // mapping(address => uint256) public referralBalances;
 
     event PaymentProcessed(uint indexed paymentID, uint indexed vendorID, uint indexed couponID, uint initialCheck, uint paidCheck, uint discountedValue);
+    event VendorWithdraw(uint indexed _vendorID, uint _amount);
     // event ReferralBonus(address indexed referral, uint256 amount);
     
     constructor(
@@ -108,6 +106,22 @@ contract PaymentProcessor is Ownable {
         return paymentID;
     }
 
+    // function to withdraw vendor funds
+    function withdrawVendorFunds(uint _vendorID, uint _amount) public {
+        require(msg.sender == getVendorAddress(_vendorID), "Not a vendor");
+        uint currentBalance = vendorBalances_[_vendorID];
+        require(currentBalance >= _amount, "Unsufficient balance");
+        paymentToken_.transfer(msg.sender, _amount);
+        vendorBalances_[_vendorID] -= _amount;
+        // emit event
+        emit VendorWithdraw(_vendorID, _amount);
+    }
+
+
+    function getVendorAddress(uint _vendorID) public view returns(address) {
+        return eCoupon_.getVendorAddress(_vendorID);
+    }
+    
     // function to calculate amount to pay with discount coupon
     function getAmountToPayWithCoupon(uint _amount, uint _couponID) public view returns(uint) {
         uint discountValue = getDiscountValueWithCoupon(_amount, _couponID);

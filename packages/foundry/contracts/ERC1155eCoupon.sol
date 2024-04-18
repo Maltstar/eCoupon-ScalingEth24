@@ -173,6 +173,10 @@ contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
     function getTotalDiscountedAmount(uint _couponID) public view returns (uint) {
         return totalDiscountedAmountByCouponCollection_[_couponID];
     }
+
+    function getVendorAddress(uint _vendorID) public view returns(address) {
+        return vendors[_vendorID].vendorAddress;
+    }
     
     // The following functions are overrides required by Solidity.
     function _update(address from, address to, uint256[] memory ids, uint256[] memory values) internal override(ERC1155Supply, ERC1155) {
