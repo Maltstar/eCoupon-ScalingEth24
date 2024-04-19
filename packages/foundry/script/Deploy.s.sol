@@ -17,13 +17,13 @@ contract DeployScript is ScaffoldETHDeploy {
             );
         }
         vm.startBroadcast(deployerPrivateKey);
-        ERC20mockup erc20Contract =
-            new ERC20mockup();
-        console.logString(
-            string.concat(
-                "ERC20mockup deployed at: ", vm.toString(address(erc20Contract))
-            )
-        );
+        // ERC20mockup erc20Contract =
+        //     new ERC20mockup();
+        // console.logString(
+        //     string.concat(
+        //         "ERC20mockup deployed at: ", vm.toString(address(erc20Contract))
+        //     )
+        // );
         
         ERC1155eCoupon eCouponContract =
             new ERC1155eCoupon();
@@ -36,7 +36,8 @@ contract DeployScript is ScaffoldETHDeploy {
         PaymentProcessor paymentProcessor =
             new PaymentProcessor(
                 address(eCouponContract),
-                address(erc20Contract)
+                // address(erc20Contract)
+                address(0x1fE33Fe1D03D120324E928353ADC633D3D81a057)
             );
         console.logString(
             string.concat(
@@ -44,7 +45,7 @@ contract DeployScript is ScaffoldETHDeploy {
             )
         );
 
-        eCouponContract.transferOwnership(address(paymentProcessor));
+        // eCouponContract.transferOwnership(address(paymentProcessor));
         
         vm.stopBroadcast();
 

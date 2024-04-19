@@ -141,7 +141,7 @@ contract PaymentProcessor is Ownable {
 }
 
 // Referals
-// 1. Stuct - address, id, name -mrbeast
+// 1. Stuct - address, id, name
 // 2. Balance
 // 3. % referal cut - vendor set default value. % from 
 // 3.A unique 
@@ -152,6 +152,4 @@ contract PaymentProcessor is Ownable {
 // + or mint only by link.
 // + SET LIMIT on promo code amount. First 500 users will get discount.
 // + Vendor create unique coupon collection for MrBeast.
-// + 
-// 5. Coupon price is 0 for MVP.
 // 6. ??? Additional function to set invoice CID.
