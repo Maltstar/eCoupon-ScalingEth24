@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   31337: {
     ERC20mockup: {
-      address: "0x09635f643e140090a9a8dcd712ed6285858cebef",
+      address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
       abi: [
         {
           type: "constructor",
@@ -568,7 +568,7 @@ const deployedContracts = {
       },
     },
     ERC1155eCoupon: {
-      address: "0xc5a5c42992decbae36851359345fe25997f5c42d",
+      address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
       abi: [
         {
           type: "constructor",
@@ -1795,7 +1795,7 @@ const deployedContracts = {
       },
     },
     PaymentProcessor: {
-      address: "0x67d269191c92caf3cd7723f116c85e6e9bf55933",
+      address: "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
       abi: [
         {
           type: "constructor",

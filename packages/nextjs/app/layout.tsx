@@ -1,16 +1,19 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import { Metadata } from "next";
+import CouponsProvider from "~~/components/CouponsProvider";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
+import { platformName } from "~~/utils/platfom/general";
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : `http://localhost:${process.env.PORT || 3000}`;
 const imageUrl = `${baseUrl}/thumbnail.jpg`;
 
-const title = "Scaffold-ETH 2 App";
-const titleTemplate = "%s | Scaffold-ETH 2";
+const title = `${platformName} App`;
+const titleTemplate = `%s | ${platformName}`;
+
 const description = "Built with 🏗 Scaffold-ETH 2";
 
 export const metadata: Metadata = {
@@ -51,7 +54,9 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider enableSystem>
-          <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
+          <CouponsProvider>
+            <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
+          </CouponsProvider>
         </ThemeProvider>
       </body>
     </html>

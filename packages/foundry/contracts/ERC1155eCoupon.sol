@@ -91,6 +91,12 @@ contract ERC1155eCoupon is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         return _addressToVendorID[_address] > 0;
     }
 
+
+        // internal function to check if the address registered as vendor
+    // function getCouponCollectionIDCounter( ) public view returns (uint) {
+    //     return couponCollectionIDCounter;
+    // }
+
     function listCouponCollection(
         string memory vendorName, 
         string memory storeLink, 
