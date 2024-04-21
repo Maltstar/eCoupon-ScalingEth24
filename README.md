@@ -1,5 +1,5 @@
 
-# eCouponsWeb3
+# eCouponsWeb3 demo app
 
 <h4 align="center">
   <a href="https://docs.scaffoldeth.io">Documentation</a> |
