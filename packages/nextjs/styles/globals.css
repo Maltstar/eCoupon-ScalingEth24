@@ -1,0 +1,228 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root,
+[data-theme] {
+  background: oklch(var(--b2));
+}
+
+body {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+p {
+  margin: 1rem 0;
+}
+
+.btn {
+  @apply shadow-md;
+  margin: auto;
+}
+
+.btn.btn-ghost {
+  @apply shadow-none;
+}
+
+form{
+  display: block;
+}
+
+.input_label
+{
+  display: block;
+  border: none;
+}
+
+.output_label
+{
+  display: block;
+  _align-items:baseline;
+  min-width: 110%;
+  border: none;
+}
+
+.button_outform
+{
+  margin-bottom: 10%;
+  _margin-left: 42%;
+}
+
+
+#btn_close
+{
+  margin-left:42%;
+}
+label
+{
+  margin: 3%;
+ _width: fit-content;
+  min-width: fit-content;
+  _margin-top: 10%;
+
+}
+
+input{
+  margin: 3%;
+}
+
+.inputwithlabel
+{
+  margin-bottom: 20%;
+}
+
+.outputwithlabel
+{
+  margin: auto;
+  margin-bottom: 20%;
+  color:yellow;
+  display: inline-block;
+  text-align: center;
+}
+
+.title
+{
+  font-size: 200%;
+  font-weight: bold;
+  margin: auto;
+  margin-bottom: 20%;
+  
+  margin-bottom: 10%;
+  text-align: center;
+}
+
+.link_shop{
+  color: greenyellow;
+}
+.title_preview{
+  font-size: 200%;
+  font-weight: bold;
+  margin: auto;
+  margin-bottom: 10%;
+  margin-top: 10%;
+  
+}
+
+.coupon_preview
+{
+  margin: auto;
+}
+
+.image_coupon
+{
+  margin:auto;
+  margin-bottom: 20%;
+  
+}
+
+#preview_image
+{
+  margin-left: 15%;
+}
+.outputform
+{
+  
+  margin:10%;
+  _color:yellow;
+  
+  
+
+}
+
+.notification_success
+{
+  background-color: rgba(113, 163, 243, 0.5);;
+  border-style: solid;
+  color: rgb(251, 255, 0);
+  margin:auto;
+  padding: auto;
+  _padding-top: 18%;
+  _min-width: 100%;
+  _min-height: 20%;
+  text-align: center;
+  display: block;
+  _margin-bottom: 20%;
+  margin-left: 5%;
+
+}
+
+#btn_mint
+{
+  margin-left: 33%;
+  _margin: auto;
+}
+
+.buttons_preview
+{
+  display: flex;
+  align-items: baseline;
+}
+
+#coupon_preview
+{
+  margin:20%;
+  width: fit-content;
+}
+
+.outputvalues
+{
+  font-weight: bold;
+  color:orange;
+}
+
+.main_title_wrapper
+{
+  margin:auto;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  flex-direction:column;
+  _margin-left: 50%;
+}
+
+#couponform
+{
+  display: flex;
+  margin:20%;
+  justify-content: space-between;
+}
+
+.card
+{
+  border-radius: 24px;
+  _color:dodgerblue;
+  background-color: rgb(59 130 246 / 0.5);
+  padding: 3%;
+  width: fit-content;
+  min-width: 150%;
+  max-width: 150%;
+  
+}
+
+.small_card
+{
+  border-radius: 24px;
+  background-color: rgb(59 130 246 / 0.5);
+  padding: 3%;
+  margin:5%;
+  min-width: 14%;
+  max-width: 14%;
+}
+
+.couponlisting
+{
+  display: flex;
+  justify-content:space-evenly ;
+  flex-direction: row;
+  flex-wrap: wrap;
+  _min-width: 200%;
+ 
+}
